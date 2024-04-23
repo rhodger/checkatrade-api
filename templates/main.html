@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <script>
+            // Handles searches triggered via the search bar submit button
+            function search() {
+                var query = document.getElementById("search_bar").value;
+                console.log(query);
+                fetch(`/api/getImage?query=${query}`).then(async function(response) {
+                    document.getElementById("image").setAttribute("src", await response.text());
+                });
+                fetch(`/api/getVideo?query=${query}`).then(async function(response) {
+                    // console.log(await response.text())
+                    document.getElementById("player").setAttribute("src", `http://www.youtube.com/embed/${await response.text()}?enablejsapi=1&origin=http://example.com`)
+                });
+            }
+        </script>
+    </head>
+    <body>
+        <div>
+            <input type="query" placeholder="search" id="search_bar" />
+            <button id="search_button" onClick="search()">search</button>
+        </div>
+        <div>
+            <img src="" id="image" />
+        </div>
+        <div>
+            <iframe id="player" type="text/html" width="640" height="390"
+                src="" frameborder="0"></iframe>
+        </div>
+    </body>
+</html>
